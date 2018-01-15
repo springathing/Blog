@@ -1,0 +1,125 @@
+﻿@model mblyakher_blog.Models.Post
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "Multipart/form-data" }))  //form tag
+{
+    @Html.AntiForgeryToken() //makes it and then hides it, won't allow data pass once compared to controller, usually put inside a form
+    
+    <div class="form-horizontal">
+        <h4>New Post</h4>
+        <hr /> @*validation summary, if you leave any input fields blank that are required or put the wrong data type it'll return message that this field needs to be filled or data type is wrong*@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })@*label tag for*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter a title" } }) @*input tag*@
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) @*validation message*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })@*label tag for*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Provide a short description" } }) @*input tag*@
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" }) @*validation message*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Week, htmlAttributes: new { @class = "control-label col-md-2" })@*label tag for*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Week, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Week Number" } }) @*input tag*@
+                @Html.ValidationMessageFor(model => model.Week, "", new { @class = "text-danger" }) @*validation message*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-4">Upload Image</label>
+            <div class="col-md-10">
+                <input name="image" type="file" class="form-control" /> @*we're not passing it through the model so we don't need razor syntax since we're using a separate "image" paramter, we're specifying the name of the paramter*@
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.MediaUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MediaUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MediaUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*<textarea name="editorial Body" class="form-control test" cols="40" rows="5" id="editor"></textarea>*@
+                <textarea id="editor" class="form-control" name="Body" rows="5"></textarea>
+                @*@Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Published)
+                    @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" /> @*form looks for this*@
+                @*button is accepted as well*@
+            </div>
+        </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+        <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                tinymce.init({
+                    selector: '#editor'
+                });
+            });
+     </script>
+}

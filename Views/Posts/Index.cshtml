@@ -1,0 +1,58 @@
+﻿@model IPagedList<mblyakher_blog.Models.Post>
+@using PagedList;
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="col-lg-8 col-md-10 mx-auto">
+    <h1>My Blog Posts</h1> 
+    @*IEnumerable is for the table not the for each loop*@
+    @using (Html.BeginForm("Index", "Posts", FormMethod.Post))
+    {
+        <div>
+            <input name="searchStr" type="text" placeholder="Search" style="padding:3px 6px; width:75%;"/> @*name="searchStr" because it is the name of the parameter that is being passed into the controller*@
+            <button class="btn btn-default" type="submit">Search</button>
+        </div>
+    }
+    <hr />
+    <hr />
+    <hr />
+    <div>
+        @if (@User.IsInRole("Admin"))
+         {
+            <a href="@Url.Action("Create", "Posts")" class="btn btn-primary pull-right">New Post</a>
+         }
+    </div>
+    @foreach (var post in Model)
+     {
+        <div class="post-preview">
+            <a href="@Url.Action("Details", new { slug = post.Slug })"> 
+                <h2 class="post-title">
+                    @post.Title
+                </h2>
+                <h3 class="post-subtitle">
+                    @post.Description
+                </h3>
+            </a>
+            <p class="post-meta">
+                Posted on @post.Created.ToLongDateString() for Week @post.Week
+            </p>
+        </div>
+
+        if (User.IsInRole("Admin"))
+         {
+            @Html.ActionLink("Edit", "Edit", new { id = post.Id }) <span> | </span>
+            @Html.ActionLink("Delete", "Delete", new { id = post.Id })
+        }
+        <hr />
+     }
+
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
+</div>
+            

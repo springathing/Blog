@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNet.Identity
+
+<style>
+    li #loginLink:hover {
+        color: cadetblue !important;
+        text-decoration: none !important;
+    }
+    li #registerLink:hover {
+        color: cadetblue !important;
+        text-decoration: none !important;
+    }
+    li #nameLink:hover {
+        color: cadetblue !important;
+        text-decoration: none !important;
+    }
+    li #logoffLink:hover {
+        color: cadetblue !important;
+        text-decoration: none !important;
+    }
+</style>
+
+@if (Request.IsAuthenticated)
+ {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right" style="margin-left:25px;">
+        <li>@* + User.Identity.GetUserName() + *@
+            <a href="@Url.Action("Index","Manage")" id="nameLink" style = "font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:white; margin-left:10px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Hello, @ViewBag.FirstName!</a>
+        </li>
+        <li><a id="logoffLink" style="font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:white; margin-left:10px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+ }
+
+else
+{
+    <ul class="nav navbar-nav navbar-right" style="margin-left:25px;">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", style = "font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", style = "font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:white; margin-left:10px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" })</li>
+    </ul>
+}

@@ -1,0 +1,61 @@
+﻿@model mblyakher_blog.Models.Post
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div>
+    <h2 class="warning">Delete Post</h2>
+    <h5>Are you sure you want to delete this?</h5>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (Model.MediaUrl != null)
+        {
+            <dd>
+                <img style="width:900px;" src="@Model.MediaUrl" />
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Week)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Week)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.Body)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
